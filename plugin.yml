@@ -1,0 +1,11 @@
+name: Epitournoi 2020
+version: 1.0
+author: Hugo Simony
+main: fr.hugosimony.epitournoi2020.Main
+commands:
+  say:
+    description: Faire une annonce
+  start:
+    description: Débuter la partie
+  login:
+    description: Se connecter en tant que joueur
