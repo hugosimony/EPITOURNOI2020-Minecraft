@@ -2,10 +2,12 @@ package fr.hugosimony.epitournoi2020;
 
 import java.util.ArrayList;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.hugosimony.epitournoi2020.commands.ModoCommand;
 import fr.hugosimony.epitournoi2020.commands.PlayerCommand;
+import fr.hugosimony.epitournoi2020.listeners.OnMove;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 
 public class Main extends JavaPlugin {
@@ -26,7 +28,8 @@ public class Main extends JavaPlugin {
 		
 		// Listeners
 		
-		//PluginManager pm = getServer().getPluginManager();
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new OnMove(), this);
 		
 		// Commandes :
 		getCommand("say").setExecutor(new ModoCommand());

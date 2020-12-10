@@ -15,4 +15,13 @@ public class Utils {
 		return false;
 	}
 	
+	public static RacePlayer getRacePlayer(Player player) {
+		RacePlayer rplayer = null;
+		for(RacePlayer rplayer_ : Main.main.players) {
+			if(rplayer_.player.getName().equals(player.getName()))
+				rplayer = rplayer_;
+		}
+		return rplayer;
+	}
+	
 }
