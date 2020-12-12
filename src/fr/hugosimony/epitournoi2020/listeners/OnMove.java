@@ -1,11 +1,16 @@
 package fr.hugosimony.epitournoi2020.listeners;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
+import fr.hugosimony.epitournoi2020.Main;
+import fr.hugosimony.epitournoi2020.State;
+import fr.hugosimony.epitournoi2020.race.Elytra;
 import fr.hugosimony.epitournoi2020.race.Jump;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 import fr.hugosimony.epitournoi2020.race.RaceState;
@@ -19,8 +24,12 @@ public class OnMove implements Listener {
 		Player player = event.getPlayer();
  		Location loc = player.getLocation();
  		RacePlayer rplayer = Utils.getRacePlayer(player);
-		
+ 		
  		if(rplayer != null) {
+ 			
+ 			if(rplayer.raceState == RaceState.WAITING && Main.main.state == State.STARTING && rplayer.teleported)
+ 				event.setCancelled(true);
+ 			
  			if(rplayer.raceState == RaceState.JUMP) {
  				// Respawn if falling
  				if(loc.getY() < 3)
@@ -60,10 +69,18 @@ public class OnMove implements Listener {
  				// Level 5
  				else if(rplayer.jumpCheckpoint == 5) {
  					if(loc.getY() >= 20 && loc.getX() > 86 && loc.getX() < 90 && loc.getZ() < -29) {
- 						rplayer.raceState = RaceState.CRAFT;
+ 						//rplayer.raceState = RaceState.CRAFT;
  						player.sendMessage("GG LEVEL 5 DONE");
+ 						rplayer.player.teleport(new Location(rplayer.player.getWorld(), -300, 104, -300));
+ 						rplayer.raceState = RaceState.ELYTRA;
+ 						rplayer.clear(rplayer.player);
+ 						rplayer.player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+ 						rplayer.player.getInventory().addItem(new ItemStack(Material.FIREWORK, 40));
  					}
  				}
+ 			}
+ 			else if(rplayer.raceState == RaceState.ELYTRA) {
+ 				Elytra.checkCheckpoints(rplayer, loc.getX(), loc.getY(), loc.getZ());
  			}
  		}
 	}

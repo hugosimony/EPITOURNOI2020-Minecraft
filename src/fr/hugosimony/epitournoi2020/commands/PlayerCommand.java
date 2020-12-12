@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.hugosimony.epitournoi2020.Main;
+import fr.hugosimony.epitournoi2020.RaceScoreboard;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 import fr.hugosimony.epitournoi2020.utils.Utils;
 
@@ -15,7 +16,7 @@ public class PlayerCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		
 		//**********************************************************************************
-		// /say
+		// /login
 		
 		if(cmd.getName().equalsIgnoreCase("login")) {
 			if(sender instanceof Player) {
@@ -23,10 +24,12 @@ public class PlayerCommand implements CommandExecutor {
 				if(!Utils.isPlayerLoggedin(player)) {
 					if(args.length == 2) {
 						Main.main.players.add(new RacePlayer(player));
+						RaceScoreboard.updateScoreBoard();
 					}
 					player.sendMessage("§c[Erreur] La commande est §6/login <id> <password>§c.");
 					return false;
 				}
+				Main.showPlayers(player);
 				player.sendMessage("§c[Erreur] Vous êtes déjà connecté.");
 				return false;
 			}

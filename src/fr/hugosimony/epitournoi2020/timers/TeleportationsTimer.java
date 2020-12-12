@@ -6,11 +6,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.State;
-import fr.hugosimony.epitournoi2020.race.RacePlayer;
-import fr.hugosimony.epitournoi2020.race.RaceState;
+import fr.hugosimony.epitournoi2020.race.Pvp;
 import fr.hugosimony.epitournoi2020.utils.Sounds;
 
-public class StartingTimer extends BukkitRunnable {
+public class TeleportationsTimer extends BukkitRunnable {
 
 	private int timer = 10;
 	
@@ -23,20 +22,16 @@ public class StartingTimer extends BukkitRunnable {
 		else {
 			if(timer == 10 || (timer <= 5 && timer > 0)) {
 				Sounds.playSound(Sound.ENTITY_ARROW_HIT_PLAYER);
-				Bukkit.broadcastMessage("§a[EPITOURNOI] §9La partie commence dans " + timer + " seconde" + (timer == 1 ? "" : "s") + " !");
+				Bukkit.broadcastMessage("§a[EPITOURNOI] §9Les téléportations commencent dans " + timer + " seconde" + (timer == 1 ? "" : "s") + " !");
 			}
 			else if(timer == 0) {
 				Sounds.playSound(Sound.ENTITY_PLAYER_LEVELUP);
-				Bukkit.broadcastMessage("§a[EPITOURNOI] §9La partie commence !");
-				Main.main.state = State.GAME;
-				for(RacePlayer rplayer : Main.main.players)
-					rplayer.raceState = RaceState.PVP;
-				for(RacePlayer rplayer : Main.main.players) {
-					rplayer.kills = 3;
-					rplayer.checkKills();
+				Bukkit.broadcastMessage("§a[EPITOURNOI] §9Les téléportations commencent !");
+				try {
+					Pvp.teleportPlayers();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				GlobalTimer task = new GlobalTimer();
-				task.runTaskTimer(Main.main, 0, 20);
 				this.cancel();
 			}
 			timer--;
@@ -44,3 +39,4 @@ public class StartingTimer extends BukkitRunnable {
 	}
 
 }
+

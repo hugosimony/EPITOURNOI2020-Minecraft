@@ -1,12 +1,19 @@
 package fr.hugosimony.epitournoi2020;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.hugosimony.epitournoi2020.commands.ModoCommand;
 import fr.hugosimony.epitournoi2020.commands.PlayerCommand;
+import fr.hugosimony.epitournoi2020.listeners.OnConnexion;
+import fr.hugosimony.epitournoi2020.listeners.OnDamageAndFood;
+import fr.hugosimony.epitournoi2020.listeners.OnDamageByPlayer;
 import fr.hugosimony.epitournoi2020.listeners.OnMove;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 
@@ -14,8 +21,12 @@ public class Main extends JavaPlugin {
 	
 	public static Main main;
 	
+	public static final Location spawn = new Location(Bukkit.getWorld("world"), 29, 24, 99, 180, 0);
+	
 	public State state;
 	public ArrayList<RacePlayer> players = new ArrayList<RacePlayer>();
+	public HashMap<Player, RaceScoreboard> scoreboard = new HashMap<Player, RaceScoreboard>();
+	public int time;
 
 	//**********************************************************************
 	@Override
@@ -26,10 +37,15 @@ public class Main extends JavaPlugin {
 		
 		state = State.WAITING;
 		
+		time = 0;
+		
 		// Listeners
 		
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new OnMove(), this);
+		pm.registerEvents(new OnDamageAndFood(), this);
+		pm.registerEvents(new OnDamageByPlayer(), this);
+		pm.registerEvents(new OnConnexion(), this);
 		
 		// Commandes :
 		getCommand("say").setExecutor(new ModoCommand());
@@ -44,5 +60,26 @@ public class Main extends JavaPlugin {
 	}
 	
 	//**********************************************************************
+	// Globlal functions
+	
+	public static boolean isGameFinished() {
+		for(RacePlayer rplayer : Main.main.players)
+			if(!rplayer.finished) return false;
+		return true;
+	}
+	
+	public static void hidePlayers(Player player) {
+		for(RacePlayer rplayer : Main.main.players) {
+			if(!rplayer.player.getName().equals(player.getName()))
+				player.hidePlayer(rplayer.player);
+		}
+	}
+	
+	public static void showPlayers(Player player) {
+		for(RacePlayer rplayer : Main.main.players) {
+			if(!rplayer.player.getName().equals(player.getName()))
+				player.showPlayer(rplayer.player);
+		}
+	}
 	
 }

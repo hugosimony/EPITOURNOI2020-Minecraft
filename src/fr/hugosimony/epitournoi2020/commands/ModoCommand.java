@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.State;
-import fr.hugosimony.epitournoi2020.timers.StartingTimer;
+import fr.hugosimony.epitournoi2020.timers.TeleportationsTimer;
 
 public class ModoCommand implements CommandExecutor {
 	
@@ -53,7 +53,7 @@ public class ModoCommand implements CommandExecutor {
 					if(args.length == 0) {
 						if(Main.main.state == State.WAITING) {
 							Main.main.state = State.STARTING;
-							StartingTimer task = new StartingTimer();
+							TeleportationsTimer task = new TeleportationsTimer();
 							task.runTaskTimer(Main.main, 0, 20);
 							return true;
 						}

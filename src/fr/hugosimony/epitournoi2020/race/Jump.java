@@ -22,4 +22,5 @@ public class Jump {
 			return checkpoint4;
 		return checkpoint5;		
 	}
+	
 }

@@ -24,4 +24,8 @@ public class Utils {
 		return rplayer;
 	}
 	
+	public static boolean isIn(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax, double x, double y, double z) {
+		return xmin <= x && xmax >= x && ymin <= y && ymax >= y && zmin <= z && zmax >= z;
+	}
+	
 }
