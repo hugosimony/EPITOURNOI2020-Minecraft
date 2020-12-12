@@ -1,15 +1,15 @@
 package fr.hugosimony.epitournoi2020.listeners;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
 
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.State;
+import fr.hugosimony.epitournoi2020.race.Craft;
 import fr.hugosimony.epitournoi2020.race.Elytra;
 import fr.hugosimony.epitournoi2020.race.Jump;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
@@ -39,7 +39,8 @@ public class OnMove implements Listener {
  					if(loc.getY() >= 19 && loc.getX() > 6 && loc.getX() < 10 && loc.getZ() < -29) {
  						rplayer.jumpCheckpoint++;
  	 					player.teleport(Jump.getGoodCheckpoint(2));
- 						player.sendMessage("GG LEVEL 1 DONE");
+ 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 1.");
  					}
  				}
  				// Level 2
@@ -47,7 +48,8 @@ public class OnMove implements Listener {
  					if(loc.getY() >= 18 && loc.getX() > 26 && loc.getX() < 30 && loc.getZ() < -29) {
  						rplayer.jumpCheckpoint++;
  	 					player.teleport(Jump.getGoodCheckpoint(3));
- 						player.sendMessage("GG LEVEL 2 DONE");
+ 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 2.");
  					}
  				}
  				// Level 3
@@ -55,7 +57,8 @@ public class OnMove implements Listener {
  					if(loc.getY() >= 19 && loc.getX() > 46 && loc.getX() < 50 && loc.getZ() < -29) {
  						rplayer.jumpCheckpoint++;
  	 					player.teleport(Jump.getGoodCheckpoint(4));
- 						player.sendMessage("GG LEVEL 3 DONE");
+ 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 3.");
  					}
  				}
  				// Level 4
@@ -63,19 +66,20 @@ public class OnMove implements Listener {
  					if(loc.getY() >= 20 && loc.getX() > 66 && loc.getX() < 70 && loc.getZ() < -29) {
  						rplayer.jumpCheckpoint++;
  	 					player.teleport(Jump.getGoodCheckpoint(5));
- 						player.sendMessage("GG LEVEL 4 DONE");
+ 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 4.");
  					}
  				}
  				// Level 5
  				else if(rplayer.jumpCheckpoint == 5) {
  					if(loc.getY() >= 20 && loc.getX() > 86 && loc.getX() < 90 && loc.getZ() < -29) {
- 						//rplayer.raceState = RaceState.CRAFT;
- 						player.sendMessage("GG LEVEL 5 DONE");
- 						rplayer.player.teleport(new Location(rplayer.player.getWorld(), -300, 104, -300));
- 						rplayer.raceState = RaceState.ELYTRA;
- 						rplayer.clear(rplayer.player);
- 						rplayer.player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
- 						rplayer.player.getInventory().addItem(new ItemStack(Material.FIREWORK, 40));
+ 						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 5.");
+ 						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de jump !\n"
+ 								+ "§9Vous passez désormais à l'épreuve de craft.");
+ 						rplayer.player.teleport(Craft.craftLocation);
+ 						rplayer.raceState = RaceState.CRAFT;
+ 						Craft.resetCraft(rplayer);
  					}
  				}
  			}

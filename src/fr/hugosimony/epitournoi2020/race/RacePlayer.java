@@ -2,8 +2,10 @@ package fr.hugosimony.epitournoi2020.race;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.RaceScoreboard;
@@ -20,6 +22,7 @@ public class RacePlayer {
 	public int xRespawn;
 	public int zRespawn;
 	public int jumpCheckpoint;
+	public boolean[] craftsDone;
 	public boolean[] elytraCheckpoints;
 	public int countElytraCp;
 	public int time;
@@ -41,6 +44,9 @@ public class RacePlayer {
 		cooldown = false;
 		kills = 0;
 		jumpCheckpoint = 1;
+		craftsDone = new boolean[9];
+		for(int i = 0; i < craftsDone.length; i++)
+			craftsDone[i] = false;
 		countElytraCp = 0;
 		elytraCheckpoints = new boolean[71];
 		elytraCheckpoints[0] = true;
@@ -48,7 +54,7 @@ public class RacePlayer {
 			elytraCheckpoints[i] = false;
 		finished = false;
 	}
-
+	
 	public void checkKills() {
 		if(kills == neededKills) {
 			player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de PVP !\n"
@@ -56,7 +62,7 @@ public class RacePlayer {
 			raceState = RaceState.JUMP;
 			player.setHealth(20);
 			// Clear
-			clear(player);
+			clear();
 			player.teleport(Jump.getGoodCheckpoint(1));
 			Main.hidePlayers(player);
 			RacePlayer rp = Pvp.getLastPlayer();
@@ -65,7 +71,7 @@ public class RacePlayer {
 				Bukkit.getScheduler().runTaskLater(Main.main, () -> {
 					if(rp.raceState == RaceState.PVP) {
 						rp.raceState = RaceState.JUMP;
-						clear(rp.player);
+						rp.clear();
 						rp.player.teleport(Jump.getGoodCheckpoint(1));
 						rp.player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de PVP !\n"
 								+ "§9Vous passez désormais à l'épreuve de jump.");
@@ -73,6 +79,20 @@ public class RacePlayer {
 					}
 				},600);
 			}
+		}
+	}
+
+	public void checkCrafts() {
+		int i = 0; for(; i < craftsDone.length && craftsDone[i]; i++);
+		if(i == craftsDone.length) {
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 50, 20);
+			player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de craft !\n"
+					+ "§9Vous passez désormais à l'épreuve d'elytra.");
+			player.teleport(Elytra.eltyraLocation);
+			raceState = RaceState.ELYTRA;
+			clear();
+			player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+			player.getInventory().addItem(new ItemStack(Material.FIREWORK, 40));
 		}
 	}
 	
@@ -91,7 +111,15 @@ public class RacePlayer {
 		RaceScoreboard.updateScoreBoard();
 	}
 	
-	public void clear(Player player) {
+	public void clear() {
+		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
+	}
+	
+	public static void clear(Player player) {
 		player.getInventory().clear();
 		player.getInventory().setHelmet(null);
 		player.getInventory().setChestplate(null);

@@ -1,7 +1,9 @@
 package fr.hugosimony.epitournoi2020.timers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.hugosimony.epitournoi2020.Main;
@@ -9,6 +11,7 @@ import fr.hugosimony.epitournoi2020.State;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 import fr.hugosimony.epitournoi2020.race.RaceState;
 import fr.hugosimony.epitournoi2020.utils.Sounds;
+import fr.hugosimony.epitournoi2020.utils.Utils;
 
 public class StartingTimer extends BukkitRunnable {
 
@@ -31,9 +34,9 @@ public class StartingTimer extends BukkitRunnable {
 				Main.main.state = State.GAME;
 				for(RacePlayer rplayer : Main.main.players)
 					rplayer.raceState = RaceState.PVP;
-				for(RacePlayer rplayer : Main.main.players) {
-					rplayer.kills = 3;
-					rplayer.checkKills();
+				for(Player p : Bukkit.getOnlinePlayers()) {
+					if(!Utils.isPlayerLoggedin(p))
+						p.setGameMode(GameMode.SPECTATOR);
 				}
 				GlobalTimer task = new GlobalTimer();
 				task.runTaskTimer(Main.main, 0, 20);

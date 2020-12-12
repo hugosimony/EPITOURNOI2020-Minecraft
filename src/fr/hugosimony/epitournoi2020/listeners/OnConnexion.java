@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.RaceScoreboard;
 import fr.hugosimony.epitournoi2020.State;
+import fr.hugosimony.epitournoi2020.race.RacePlayer;
 import fr.hugosimony.epitournoi2020.utils.Utils;
 
 public class OnConnexion implements Listener {
@@ -22,6 +23,7 @@ public class OnConnexion implements Listener {
 		if(Main.main.state == State.WAITING && !Utils.isPlayerLoggedin(player)) {
 			player.setGameMode(GameMode.ADVENTURE);
 			player.teleport(Main.spawn);
+			RacePlayer.clear(player);
 		}
 		else if(Utils.getRacePlayer(player) == null) {
 			player.setGameMode(GameMode.SPECTATOR);

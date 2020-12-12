@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.hugosimony.epitournoi2020.commands.ModoCommand;
 import fr.hugosimony.epitournoi2020.commands.PlayerCommand;
 import fr.hugosimony.epitournoi2020.listeners.OnConnexion;
+import fr.hugosimony.epitournoi2020.listeners.OnCraft;
 import fr.hugosimony.epitournoi2020.listeners.OnDamageAndFood;
 import fr.hugosimony.epitournoi2020.listeners.OnDamageByPlayer;
 import fr.hugosimony.epitournoi2020.listeners.OnMove;
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin {
 	public State state;
 	public ArrayList<RacePlayer> players = new ArrayList<RacePlayer>();
 	public HashMap<Player, RaceScoreboard> scoreboard = new HashMap<Player, RaceScoreboard>();
+	public int craft;
 	public int time;
 
 	//**********************************************************************
@@ -36,6 +38,7 @@ public class Main extends JavaPlugin {
 		main = this;
 		
 		state = State.WAITING;
+		craft = 1;
 		
 		time = 0;
 		
@@ -46,11 +49,13 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new OnDamageAndFood(), this);
 		pm.registerEvents(new OnDamageByPlayer(), this);
 		pm.registerEvents(new OnConnexion(), this);
+		pm.registerEvents(new OnCraft(), this);
 		
 		// Commandes :
 		getCommand("say").setExecutor(new ModoCommand());
 		getCommand("start").setExecutor(new ModoCommand());
 		getCommand("login").setExecutor(new PlayerCommand());
+		getCommand("reset").setExecutor(new PlayerCommand());
 		
 	}
 	

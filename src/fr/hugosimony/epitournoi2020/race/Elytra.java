@@ -1,9 +1,14 @@
 package fr.hugosimony.epitournoi2020.race;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+
 import fr.hugosimony.epitournoi2020.utils.Utils;
 
 public class Elytra {
 
+	public static final Location eltyraLocation = new Location(Bukkit.getWorld("world"), -299.5, 102, -299.5);
+	
 	public static void checkCheckpoints(RacePlayer rplayer, double x, double y, double z) {
 		boolean[] checkpoints = rplayer.elytraCheckpoints;
 		if(checkpoints[0] && !checkpoints[1] && Utils.isIn(-323, -320,  93,  97,  -309,  -305, x, y, z)){
