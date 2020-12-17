@@ -77,8 +77,8 @@ public class OnMove implements Listener {
  						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini le jump 5.");
  						player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de jump !\n"
  								+ "§9Vous passez désormais à l'épreuve de craft.");
- 						rplayer.player.teleport(Craft.craftLocation);
  						rplayer.raceState = RaceState.CRAFT;
+ 						rplayer.player.teleport(Craft.craftLocation);
  						Craft.resetCraft(rplayer);
  					}
  				}

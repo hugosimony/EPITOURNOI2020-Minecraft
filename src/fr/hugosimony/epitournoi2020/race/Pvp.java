@@ -19,7 +19,7 @@ public class Pvp {
 	private static final int minX = 9;
 	private static final int minZ = 18;
 	
-	// 36 players maximum !
+	// 25 players maximum !
 	public static void teleportPlayers() throws InterruptedException {
 		World wolrd = Bukkit.getWorld("world");
 		int len = Main.main.players.size();
@@ -27,17 +27,17 @@ public class Pvp {
 		Collections.shuffle(Main.main.players);
 		// Teleportations
 		int x = 0;
-		int y = 0;
+		int z = 0;
 		for(int i = 0; i < len && Main.main.state == State.STARTING; i++) {
 			RacePlayer rplayer = Main.main.players.get(i);
 			Player player = rplayer.player;
 			Bukkit.broadcastMessage("§a[EPITOURNOI] §9Téléportation de §6" + player.getName() + "§9.");
 			rplayer.xRespawn = minX + 35-(x*7);
-			rplayer.zRespawn = minZ + 35-(y*7);
+			rplayer.zRespawn = minZ + 35-(z*7);
 			x++;
-			if(x > 6) {
+			if(x >= 5) {
 				x = 0;
-				y++;
+				z++;
 			}
 			player.teleport(new Location(wolrd, rplayer.xRespawn, 22, rplayer.zRespawn, -90, -90));
 			rplayer.teleported = true;

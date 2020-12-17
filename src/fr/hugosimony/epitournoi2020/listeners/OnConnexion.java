@@ -12,6 +12,7 @@ import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.RaceScoreboard;
 import fr.hugosimony.epitournoi2020.State;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
+import fr.hugosimony.epitournoi2020.race.RaceState;
 import fr.hugosimony.epitournoi2020.utils.Utils;
 
 public class OnConnexion implements Listener {
@@ -25,9 +26,19 @@ public class OnConnexion implements Listener {
 			player.teleport(Main.spawn);
 			RacePlayer.clear(player);
 		}
-		else if(Utils.getRacePlayer(player) == null) {
-			player.setGameMode(GameMode.SPECTATOR);
-			event.setJoinMessage(null);
+		else {
+			RacePlayer racePlayer = Utils.getRacePlayer(player);
+			if(racePlayer == null || racePlayer.finished) {
+				for(RacePlayer rp : Main.main.players)
+					rp.player.hidePlayer(player);
+				player.setGameMode(GameMode.SPECTATOR);
+				event.setJoinMessage(null);
+			}
+			else {
+				player.setGameMode(GameMode.ADVENTURE);
+				if(racePlayer.raceState != RaceState.PVP)
+					Main.hidePlayers(player);
+			}
 		}
 		
 		RaceScoreboard sb = new RaceScoreboard(player);

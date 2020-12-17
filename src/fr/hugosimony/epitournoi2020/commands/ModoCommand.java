@@ -50,6 +50,28 @@ public class ModoCommand implements CommandExecutor {
 			if(sender instanceof Player) {
 				Player player = (Player) sender;
 				if(player.isOp()) {
+					if(args.length == 1){
+						if(args[0].equals("1")) {
+							Main.main.craft = 1;
+							return true;
+						}
+						if(args[0].equals("2")) {
+							Main.main.craft = 2;
+							return true;
+						}
+						if(args[0].equals("testing")) {
+							if(Main.main.testingSolo) {
+								Main.main.testingSolo = false;
+								player.sendMessage("§9Vous avez désactivé le mode test.");
+							}
+							else {
+								Main.main.testingSolo = true;
+								player.sendMessage("§9Vous avez activé le mode test.");
+							}
+							return true;
+						}
+						return false;
+					}
 					if(args.length == 0) {
 						if(Main.main.state == State.WAITING) {
 							Main.main.state = State.STARTING;

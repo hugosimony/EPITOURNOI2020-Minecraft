@@ -1,5 +1,7 @@
 package fr.hugosimony.epitournoi2020.race;
 
+import java.text.SimpleDateFormat;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -25,6 +27,7 @@ public class RacePlayer {
 	public boolean[] craftsDone;
 	public boolean[] elytraCheckpoints;
 	public int countElytraCp;
+	public int countFirework;
 	public int time;
 	public int timePvp;
 	public int timeJump;
@@ -48,6 +51,7 @@ public class RacePlayer {
 		for(int i = 0; i < craftsDone.length; i++)
 			craftsDone[i] = false;
 		countElytraCp = 0;
+		countFirework = 0;
 		elytraCheckpoints = new boolean[71];
 		elytraCheckpoints[0] = true;
 		for(int i = 1; i < elytraCheckpoints.length; i++)
@@ -61,7 +65,6 @@ public class RacePlayer {
 					+ "§9Vous passez désormais à l'épreuve de jump.");
 			raceState = RaceState.JUMP;
 			player.setHealth(20);
-			// Clear
 			clear();
 			player.teleport(Jump.getGoodCheckpoint(1));
 			Main.hidePlayers(player);
@@ -102,11 +105,17 @@ public class RacePlayer {
 		countElytraCp++;
 		if(countElytraCp == 70) {
 			player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve d'Elytra !");
-			Bukkit.broadcastMessage("§a[EPITOURNOI] §6" + player.getName() + " a fini la course !");
+			Bukkit.broadcastMessage("§a[EPITOURNOI] §6" + player.getName() + " #" + Main.main.rank + " a fini la course en " + new SimpleDateFormat("mm:ss").format(time * 1000) + " !");
+			Main.main.playersDone.add(player.getName());
+			Main.main.timePlayersDone.add(new SimpleDateFormat("mm:ss").format(time * 1000));
+			Main.main.rank++;
 			player.setGameMode(GameMode.SPECTATOR);
 			Main.showPlayers(player);
 			raceState = RaceState.END;
 			finished = true;
+			clear();
+			if(Main.isGameFinished())
+				Main.main.time = 1799;
 		}
 		RaceScoreboard.updateScoreBoard();
 	}

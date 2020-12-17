@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.hugosimony.epitournoi2020.Main;
 import fr.hugosimony.epitournoi2020.State;
+import fr.hugosimony.epitournoi2020.race.Jump;
 import fr.hugosimony.epitournoi2020.race.RacePlayer;
 import fr.hugosimony.epitournoi2020.race.RaceState;
 import fr.hugosimony.epitournoi2020.utils.Sounds;
@@ -40,6 +41,17 @@ public class StartingTimer extends BukkitRunnable {
 				}
 				GlobalTimer task = new GlobalTimer();
 				task.runTaskTimer(Main.main, 0, 20);
+				if(Main.main.testingSolo) {
+					for(RacePlayer rplayer : Main.main.players) {
+						rplayer.player.sendMessage("§a[EPITOURNOI] §9Bravo vous avez fini l'épreuve de PVP !\n"
+								+ "§9Vous passez désormais à l'épreuve de jump.");
+						rplayer.raceState = RaceState.JUMP;
+						rplayer.player.setHealth(20);
+						rplayer.clear();
+						rplayer.player.teleport(Jump.getGoodCheckpoint(1));
+						Main.hidePlayers(rplayer.player);
+					}
+				}
 				this.cancel();
 			}
 			timer--;

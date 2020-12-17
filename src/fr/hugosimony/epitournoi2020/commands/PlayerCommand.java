@@ -26,11 +26,13 @@ public class PlayerCommand implements CommandExecutor {
 				Player player = (Player) sender;
 				if(Main.main.state == State.WAITING) {
 					if(!Utils.isPlayerLoggedin(player)) {
-						if(args.length == 2) {
+						if(args.length == 1 && args[0].equalsIgnoreCase(player.getName())) {
 							Main.main.players.add(new RacePlayer(player));
 							RaceScoreboard.updateScoreBoard();
+							player.sendMessage("§a[EPITOURNOI] §9Vous vous êtes bien connecté.");
+							return true;
 						}
-						player.sendMessage("§c[Erreur] La commande est §6/login <id> <password>§c.");
+						player.sendMessage("§c[Erreur] La commande est §6/login <name>§c.");
 						return false;
 					}
 					Main.showPlayers(player);

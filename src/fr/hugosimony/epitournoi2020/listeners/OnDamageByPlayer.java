@@ -29,7 +29,7 @@ public class OnDamageByPlayer implements Listener {
 				else if(event.getDamage() >= player.getHealth()) {
 					event.setCancelled(true);
 					rplayer.cooldown = true;
-					Bukkit.getScheduler().runTaskLater(Main.main, () -> {rplayer.cooldown = false;},60);
+					Bukkit.getScheduler().runTaskLater(Main.main, () -> {rplayer.cooldown = false;},40);
 					player.teleport(new Location(player.getWorld(), rplayer.xRespawn, 22, rplayer.zRespawn));
 					player.setHealth(20);
 					damager.sendMessage("§a[EPITOURNOI] §9Vous avez tué §6" + player.getName() + "§9 !");
