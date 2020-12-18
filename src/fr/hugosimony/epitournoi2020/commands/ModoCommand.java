@@ -50,13 +50,24 @@ public class ModoCommand implements CommandExecutor {
 			if(sender instanceof Player) {
 				Player player = (Player) sender;
 				if(player.isOp()) {
-					if(args.length == 1){
+					if(args.length == 1 && args[0].equalsIgnoreCase("cancel")) {
+						if(Main.main.state == State.STARTING) {
+							Main.main.state = State.WAITING;
+							player.sendMessage("§9Vous avez arrêté le démarrage.");
+							return true;
+						}
+						player.sendMessage("§c[Erreur] La partie n'est pas en démarrage.");
+						return false;
+					}
+					else if(args.length == 1){
 						if(args[0].equals("1")) {
 							Main.main.craft = 1;
+							player.sendMessage("§9Vous avez choisi le set de craft 1.");
 							return true;
 						}
 						if(args[0].equals("2")) {
 							Main.main.craft = 2;
+							player.sendMessage("§9Vous avez choisi le set de craft 2.");
 							return true;
 						}
 						if(args[0].equals("testing")) {
@@ -70,9 +81,10 @@ public class ModoCommand implements CommandExecutor {
 							}
 							return true;
 						}
+						player.sendMessage("§c[Erreur] Cette commande n'existe pas.");
 						return false;
 					}
-					if(args.length == 0) {
+					else if(args.length == 0) {
 						if(Main.main.state == State.WAITING) {
 							Main.main.state = State.STARTING;
 							TeleportationsTimer task = new TeleportationsTimer();
@@ -80,15 +92,6 @@ public class ModoCommand implements CommandExecutor {
 							return true;
 						}
 						player.sendMessage("§c[Erreur] La partie a déjà démarré.");
-						return false;
-					}
-					if(args.length == 1 && args[0].equalsIgnoreCase("cancel")) {
-						if(Main.main.state == State.STARTING) {
-							Main.main.state = State.WAITING;
-							player.sendMessage("§9Vous avez arrêté le démarrage.");
-							return true;
-						}
-						player.sendMessage("§c[Erreur] La partie n'est pas en démarrage.");
 						return false;
 					}
 					player.sendMessage("§c[Erreur] La commande est §6/start §cou §6/start cancel§c.");

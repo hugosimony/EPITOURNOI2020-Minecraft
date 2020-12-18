@@ -85,7 +85,7 @@ public class Main extends JavaPlugin {
 	
 	public static boolean isGameFinished() {
 		for(RacePlayer rplayer : Main.main.players)
-			if(!rplayer.finished) return false;
+			if(!rplayer.finished && rplayer.raceState != RaceState.ENDCRAFT && rplayer.raceState != RaceState.ENDELYTRA) return false;
 		return true;
 	}
 	
@@ -105,13 +105,13 @@ public class Main extends JavaPlugin {
 	
 	public static void makeLeaderboard() {
 		for(RacePlayer rplayer : Main.main.players) {
-			if(rplayer.raceState == RaceState.ELYTRA) {
+			if(rplayer.raceState == RaceState.ELYTRA || rplayer.raceState == RaceState.ENDELYTRA) {
 				if(Main.main.leaderboard.containsKey(70 - rplayer.countElytraCp))
 					Main.main.leaderboard.put(70 - rplayer.countElytraCp, Main.main.leaderboard.get(70 - rplayer.countElytraCp) + " " + rplayer.player.getName());
 				else
 					Main.main.leaderboard.put(70 - rplayer.countElytraCp, rplayer.player.getName());
 			}
-			else if(rplayer.raceState == RaceState.CRAFT) {
+			else if(rplayer.raceState == RaceState.CRAFT || rplayer.raceState == RaceState.ENDCRAFT) {
 				if(Main.main.leaderboard.containsKey(71))
 					Main.main.leaderboard.put(71, Main.main.leaderboard.get(71) + " " + rplayer.player.getName());
 				else
@@ -121,19 +121,19 @@ public class Main extends JavaPlugin {
 	}
 	
 	public static void printLeaderboard() {
-		Bukkit.broadcastMessage("§a[EPITOURNOI] §eClassement :");
+		Bukkit.broadcastMessage("§a[EPITOURNOI] §6Classement :");
 		int i = 0;
 		for(; i < Main.main.playersDone.size(); i++)
-			Bukkit.broadcastMessage("§6 #" + i + " " + Main.main.playersDone.get(i) + "§e (" + Main.main.timePlayersDone.get(i) + ")");
+			Bukkit.broadcastMessage("§6 #" + (i+1) + " " + Main.main.playersDone.get(i) + "§e (" + Main.main.timePlayersDone.get(i) + ")");
 		int max = Main.main.playersDoneElytra.size() + i;
 		for(; i < max; i++)
-			Bukkit.broadcastMessage("§6 #" + i + " " + Main.main.playersDoneElytra.get(i) + "§e (30:00)");
+			Bukkit.broadcastMessage("§6 #" + (i+1) + " " + Main.main.playersDoneElytra.get(i) + "§e (30:00)");
 		int x = 1;
 		for(; x <= 71; x++) {
 			if(Main.main.leaderboard.containsKey(x)) {
 				String[] players = Main.main.leaderboard.get(x).split(" ");
 				for(String player : players)
-					Bukkit.broadcastMessage("§6 #" + i + " " + player + "§e (30:00)");
+					Bukkit.broadcastMessage("§6 #" + (i+1) + " " + player + "§e (30:00)");
 				i++;
 			}
 		}

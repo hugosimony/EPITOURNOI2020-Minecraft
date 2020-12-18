@@ -32,28 +32,28 @@ public class OnClick implements Listener {
 	    			meta.setDisplayName("§c+ 10 Secondes");
 	    			it.setItemMeta(meta);
 	    			player.setItemInHand(it);
-	    			if(rplayer.countFirework != 39) {
+	    			if(rplayer.countFirework > 39) {
 	    				rplayer.time+=10;
-		    			if(rplayer.time > 17999) {
-		    				rplayer.timeElytra += 17999 - rplayer.time - 10;
-		    				rplayer.time = 17999;
+		    			if(rplayer.time > 1799) {
+		    				rplayer.timeElytra += 1799 - rplayer.time - 10;
+		    				rplayer.time = 1800;
 		    				Main.main.playersDoneElytra.add(player.getName());
 		    				player.setGameMode(GameMode.SPECTATOR);
 		    				Main.showPlayers(player);
 		    				rplayer.raceState = RaceState.END;
 		    				rplayer.finished = true;
 		    				rplayer.clear();
+		    				if(Main.isGameFinished())
+		    					Main.main.time = 1799;
 		    			}
 		    			else
 		    				rplayer.timeElytra += 10;
 		    			player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_HURT, 50, 20);
 	    			}
-	    			rplayer.countFirework++;
 	    		}
-	    		else {
+	    		else
 	    			player.getItemInHand().setAmount(40-rplayer.countFirework);
-	    			rplayer.countFirework++;
-	    		}
+    			rplayer.countFirework++;
 	    	}
 	    }
 	}
