@@ -55,8 +55,8 @@ public class PlayerCommand implements CommandExecutor {
 				RacePlayer rplayer = Utils.getRacePlayer(player);
 				if(rplayer != null) {
 					if(rplayer.raceState == RaceState.CRAFT) {
-						Craft.resetCraft(rplayer);
 						player.sendMessage("§a[EPITOURNOI] §9Vous avez réinitialisé vos crafts.");
+						Craft.resetCraft(rplayer);
 						return true;
 					}
 					player.sendMessage("§c[Erreur] Vous n'êtes pas dans la phase de craft.");

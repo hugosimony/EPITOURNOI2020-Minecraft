@@ -70,6 +70,26 @@ public class ModoCommand implements CommandExecutor {
 							player.sendMessage("§9Vous avez choisi le set de craft 2.");
 							return true;
 						}
+						if(args[0].equals("3")) {
+							Main.main.craft = 3;
+							player.sendMessage("§9Vous avez choisi le set de craft 3.");
+							return true;
+						}
+						if(args[0].equals("4")) {
+							Main.main.craft = 4;
+							player.sendMessage("§9Vous avez choisi le set de craft 4.");
+							return true;
+						}
+						if(args[0].equals("5")) {
+							Main.main.craft = 5;
+							player.sendMessage("§9Vous avez choisi le set de craft 5.");
+							return true;
+						}
+						if(args[0].equals("6")) {
+							Main.main.craft = 6;
+							player.sendMessage("§9Vous avez choisi le set de craft 6.");
+							return true;
+						}
 						if(args[0].equals("testing")) {
 							if(Main.main.testingSolo) {
 								Main.main.testingSolo = false;
