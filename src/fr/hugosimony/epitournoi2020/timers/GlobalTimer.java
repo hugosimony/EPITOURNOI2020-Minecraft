@@ -57,7 +57,7 @@ public class GlobalTimer extends BukkitRunnable {
 						rplayer.timePvp++;
 					else if(rplayer.raceState == RaceState.JUMP) {
 						rplayer.timeJump++;
-						if(rplayer.timeJump == 1080) {
+						if(rplayer.timeJump == 600) {
 							rplayer.player.sendMessage("§a[EPITOURNOI] §9L'épreuve de jump est terminée.\n"
 									+ "§9Vous passez désormais à l'épreuve de craft.");
 							rplayer.timeJump += 30 * (5 - rplayer.jumpCheckpoint);

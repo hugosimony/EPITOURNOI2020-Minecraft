@@ -27,6 +27,13 @@ public class OnConnexion implements Listener {
 			RacePlayer.clear(player);
 		}
 		else {
+			/*
+		    if(contains(Main.main.players, player))
+		    	Main.main.players.add(findPlayer(player));
+		    else {
+		    	RacePlayer racePlayer = new RacePlayer(player);
+		    	Main.main.players.add(racePlayer);
+		    }*/
 			RacePlayer racePlayer = Utils.getRacePlayer(player);
 			if(racePlayer == null || racePlayer.finished) {
 				for(RacePlayer rp : Main.main.players)
@@ -53,4 +60,26 @@ public class OnConnexion implements Listener {
 		event.setQuitMessage("§c[-] §6" + player.getName());
 		RaceScoreboard.updateScoreBoard();
 	}
+	
+	/*
+	public boolean contains(ArrayList<RacePlayer> list, Player player) {
+		boolean founded = false;
+		for(RacePlayer p: list) {
+			if(player.getName().equalsIgnoreCase(p.player.getName()))
+				founded = true;
+		}
+		return founded;
+	}
+	
+	public RacePlayer findPlayer(Player player) {
+		
+		RacePlayer p = null;
+		for(RacePlayer player_: Main.main.players) {
+			if(player_.player.getName().equalsIgnoreCase(player.getName())) {
+				player_.player = player;
+				p = player_;
+			}
+		}
+		return p;
+	}*/
 }

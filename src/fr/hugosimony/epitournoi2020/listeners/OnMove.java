@@ -84,6 +84,8 @@ public class OnMove implements Listener {
  				}
  			}
  			else if(rplayer.raceState == RaceState.ELYTRA) {
+ 				if(player.getLocation().getY() < 0)
+ 					player.teleport(Elytra.eltyraLocation);
  				Elytra.checkCheckpoints(rplayer, loc.getX(), loc.getY(), loc.getZ());
  			}
  		}
